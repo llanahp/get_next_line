@@ -105,7 +105,16 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	line = NULL;
-	if (fd < 0 || read(fd, 0, 0) < 0 || BUFFER_SIZE < 0)
+	if (read(fd, 0, 0) < 0)
+	{
+		if (text != NULL)
+		{
+			free(text);
+			text = NULL;
+		}
+		return (NULL);
+	}
+	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
 	text = leer(fd, text);
 	if (!text)
